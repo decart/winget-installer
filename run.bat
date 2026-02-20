@@ -1,0 +1,1 @@
+.\.venv\Scripts\winget-installer.exe

@@ -1,0 +1,13 @@
+.package_checkbox {
+  padding: 0px;
+  border: none;
+  background: #fff;
+}
+
+.package_checkbox QCheckBox {
+  font-weight: bold;
+}
+
+.package_checkbox[isEven="true"] {
+  background: #deebf7;
+}
