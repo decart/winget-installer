@@ -12,5 +12,12 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.19.0",
+]
+
 [project.scripts]
+list-packages = "scripts.list_packages:main"
+build = "scripts.build:main"
 winget-installer = "winget_installer:main"

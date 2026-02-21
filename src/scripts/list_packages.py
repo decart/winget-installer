@@ -1,12 +1,35 @@
 import subprocess
 import json
 from os import makedirs, path
+from typing import NotRequired, TypedDict
 
-
-from tps.Column import Column
-from tps.Package import Package, package_fields_mapping
+## === Constants ===
 
 CACHE_FILE = '.tmp/installed_packages.txt'
+
+PACKAGE_FIELDS_MAPPING = {
+  "Имя": "name",
+  "ИД": "id",
+  "Версия": "version",
+  "Доступно": "available",
+  "Источник": "source",
+}
+
+## === Types ===
+
+class Column(TypedDict):
+  title: str
+  start: int
+  end: NotRequired[int]
+
+class Package(TypedDict):
+  name: str
+  id: str
+  version: str
+  available: str
+  source: str
+
+## === Functions ===
 
 def get_installed_packages():
   makedirs('.tmp', exist_ok=True)
@@ -77,7 +100,7 @@ def get_packages():
       end = column.get('end', len(line))
 
       value = line[start:end].strip()
-      package_field = package_fields_mapping.get(column['title'])
+      package_field = PACKAGE_FIELDS_MAPPING.get(column['title'])
 
       if (package_field is not None):
         packages_item[package_field] = value
@@ -86,7 +109,9 @@ def get_packages():
 
   return packages
 
+## === Main ===
 
-packages = [p for p in get_packages().values() if p['source'] == 'winget']
-with open('packages.json', 'w', encoding='utf-8', newline='\n') as f:
-  json.dump(packages, f, indent=2, ensure_ascii=False)
+def main():
+  packages = [p for p in get_packages().values() if p['source'] == 'winget']
+  with open('packages.json', 'w', encoding='utf-8', newline='\n') as f:
+    json.dump(packages, f, indent=2, ensure_ascii=False)

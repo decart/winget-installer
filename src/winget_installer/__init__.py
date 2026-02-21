@@ -10,8 +10,11 @@ def main() -> None:
   main_window = MainWindow()
   main_window.show()
 
-  with open('src/winget_installer/ui/styles.qss', 'r') as f:
+  with open('styles.qss', 'r') as f:
     style = f.read()
     app.setStyleSheet(style)
 
   sys.exit(app.exec())
+
+if __name__ == "__main__":
+  main()

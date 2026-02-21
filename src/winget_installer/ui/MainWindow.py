@@ -14,6 +14,7 @@ class MainWindow(QWidget):
 
   def init_ui(self):
     self.setWindowTitle('Winget Installer')
+    self.resize(600, 1000)
     self.main_layout = QVBoxLayout()
     self.setLayout(self.main_layout)
 
@@ -28,8 +29,11 @@ class MainWindow(QWidget):
 
   def on_install_clicked(self):
     selected_items = [item.package for item in self.select.list_items if item.selected]
-    for item in selected_items:
-      print(f"Selected items changed: {item.name}")
+    cmd = "winget install `\n  "
+    cmd += " `\n  ".join(item.id for item in selected_items)
+    cmd += "\n"
+
+    print(cmd)
 
   def on_selection_changed(self, selected_items: list[Package]):
     for item in selected_items:
